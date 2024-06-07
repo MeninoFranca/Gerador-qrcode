@@ -40,3 +40,27 @@ def calcular_crc16(payload):
             resultado &= 0xFFFF
     return f"{resultado:04X}"
 
+@app.route('/gerar_pix', methods=['POST'])
+def gerar_pix_endpoint():
+    data = request.json
+    valor = data['valor']
+    
+    chave_pix = "teste@teste.com"
+    nome_recebedor = "teste teste"
+    cidade_recebedor = "teste teste"
+    txid = "teste teste"
+    
+    payload = gerar_pix(valor, chave_pix, nome_recebedor, cidade_recebedor, txid)
+    qrcode_img = gerar_qrcode(payload)
+    
+    buffered = BytesIO()
+    qrcode_img.save(buffered, format="PNG")
+    img_str = base64.b64encode(buffered.getvalue()).decode()
+    
+    return jsonify({
+        "qrcode": img_str,
+        "copiaCola": payload
+    })
+
+if __name__ == '__main__':
+    app.run(debug=True)
