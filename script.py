@@ -15,4 +15,4 @@ def gerar_pix(valor, chave_pix, nome_recebedor, cidade_recebedor, txid):
     62070503***{txid}
     6304
     """
- 
+  payload = ''.join(payload.split())
