@@ -16,3 +16,6 @@ def gerar_pix(valor, chave_pix, nome_recebedor, cidade_recebedor, txid):
     6304
     """
   payload = ''.join(payload.split())
+
+  crc16 = calcular_crc16(payload)
+  payload += crc16
